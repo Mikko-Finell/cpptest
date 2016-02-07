@@ -1,4 +1,4 @@
-#include "libcpptest.hpp"
+#include "cpptest.hpp"
 
 bool passing_test() {
     return true;
