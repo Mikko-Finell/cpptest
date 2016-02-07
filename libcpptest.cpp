@@ -1,7 +1,6 @@
 #include <iomanip>
 #include <iostream>
-#include <cmath>
-#include "libcpptest.hpp"
+#include <libcpptest.hpp>
 
 cpptest::Module::Module(std::string module_name) {
     std::cout<<'\n'<<"Running tests for "<<'"'<<module_name<<'"'<<"..."<<'\n';
