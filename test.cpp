@@ -14,5 +14,7 @@ int main() {
     meta.test("passing test", passing_test());
     meta.test("failing test", failing_test());
     meta.test("another passing test", passing_test());
+    meta.test_fn("failing lambda", []{ return false; });
+    meta.test_fn("passing lambda", []{ return true; });
 }
 

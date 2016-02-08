@@ -3,6 +3,7 @@
 
 #include <string>
 #include <chrono>
+#include <functional>
 
 namespace cpptest {
 
@@ -17,6 +18,7 @@ public:
     Module(std::string module_name);
     void set_report_time(bool flag);
     void test(std::string case_name, bool test_success);
+    void test_fn(std::string case_name, std::function<bool()> fn);
     ~Module();
 };
 

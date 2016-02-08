@@ -46,3 +46,7 @@ void cpptest::Module::test(std::string case_name, bool test_success) {
     }
     std::cout<<case_name<<std::endl;
 }
+
+void cpptest::Module::test_fn(std::string case_name, std::function<bool()> fn) {
+    return test(case_name, fn());
+}
