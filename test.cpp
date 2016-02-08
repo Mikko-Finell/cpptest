@@ -10,6 +10,7 @@ bool failing_test() {
 
 int main() {
     cpptest::Module meta{"test the test"};
+    meta.set_report_time(true);
     meta.test("passing test", passing_test());
     meta.test("failing test", failing_test());
     meta.test("another passing test", passing_test());

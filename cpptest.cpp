@@ -2,8 +2,14 @@
 #include <iostream>
 #include <cpptest.hpp>
 
-cpptest::Module::Module(std::string module_name) {
+cpptest::Module::Module(std::string module_name)
+    : start_time(std::chrono::high_resolution_clock::now())
+{
     std::cout<<'\n'<<"Running tests for "<<'"'<<module_name<<'"'<<"..."<<'\n';
+}
+
+void cpptest::Module::set_report_time(bool flag) {
+    report_time = flag;
 }
 
 cpptest::Module::~Module() {
@@ -15,8 +21,16 @@ cpptest::Module::~Module() {
     } else if (passed != 0) {
         rate = 100 * (double(passed) / double(num_tests));
     }
-    std::cout<<"Passed: "<<passed<<"/"<<num_tests;
-    std::cout<<std::fixed<<std::setprecision(1)<<" ("<<rate<<"%)\n\n";
+    std::cout<<"Passed: "<<passed<<"/"<<num_tests
+             <<std::fixed<<std::setprecision(1)<<" ("<<rate<<"%)\n";
+    if (report_time) {
+        auto dt = std::chrono::high_resolution_clock::now() - start_time;
+        auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(dt);
+        std::cout<<"Completed in "<<ms.count()<<"ms\n"<<std::endl;
+    } else {
+        std::cout<<std::endl;
+    }
+
 }
 
 void cpptest::Module::test(std::string case_name, bool test_success) {
