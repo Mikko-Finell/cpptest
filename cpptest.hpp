@@ -5,9 +5,11 @@
 #include <chrono>
 #include <functional>
 
-namespace cpptest {
+namespace cpptest
+{
 
-class Module {
+class Module
+{
     std::chrono::high_resolution_clock::time_point start_time;
     bool report_time = false;
     const std::string module_name;
@@ -16,12 +18,12 @@ class Module {
 
 public:
     Module(std::string module_name);
-    void set_report_time(bool flag);
-    void test(std::string case_name, bool test_success);
-    void test_fn(std::string case_name, std::function<bool()> fn);
     ~Module();
+    void set_report_time(bool flag);
+    void report(std::string case_name, bool test_success);
+    void fn(std::string case_name, std::function<bool()> f);
 };
 
-}
+} // namespace cpptest
 
 #endif 
