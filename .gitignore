@@ -1,3 +1,10 @@
+# Project files and directories
+CMakeFiles/
+cmake_install.cmake
+CMakeCache.txt
+install_manifest.txt
+Makefile
+
 # Compiled Object files
 *.slo
 *.lo
@@ -10,6 +17,7 @@
 
 # Compiled Dynamic libraries
 *.so
+*.so.*
 *.dylib
 *.dll
 
@@ -26,4 +34,3 @@
 *.exe
 *.out
 *.app
-tests

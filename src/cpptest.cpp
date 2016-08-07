@@ -10,7 +10,7 @@ cpptest::Module::Module(std::string module_name)
 
 cpptest::Module::~Module()
 {
-    auto num_tests = passed + failed;
+    const auto num_tests = passed + failed;
     double rate = 0.0;
     if (num_tests == 0) {
         std::cout<<"No tests yet..."<<std::endl;
@@ -21,13 +21,13 @@ cpptest::Module::~Module()
     std::cout<<"Passed: "<<passed<<"/"<<num_tests
              <<std::fixed<<std::setprecision(1)<<" ("<<rate<<"%)\n";
     if (report_time) {
-        auto dt = std::chrono::high_resolution_clock::now() - start_time;
-        auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(dt);
+        using namespace std::chrono;
+        const auto dt = high_resolution_clock::now() - start_time;
+        const auto ms = duration_cast<milliseconds>(dt);
         std::cout<<"Completed in "<<ms.count()<<"ms\n"<<std::endl;
     } else {
         std::cout<<std::endl;
     }
-
 }
 
 void cpptest::Module::set_report_time(bool flag)
@@ -37,15 +37,15 @@ void cpptest::Module::set_report_time(bool flag)
 
 void cpptest::Module::report(std::string case_name, bool test_success)
 {
-    auto NORMAL = "\x1B[0m";
-    auto RED    = "\x1B[31m";
-    auto GREEN  = "\x1B[32m";
+    const auto NORMAL = "\x1B[0m";
+    const auto RED    = "\x1B[31m";
+    const auto GREEN  = "\x1B[32m";
     if (test_success) {
         passed++;
-        std::cout<<" ["<<GREEN<<"PASSED"<<NORMAL<<"] ";
+        std::cout<<" ["<<GREEN<<"PASS"<<NORMAL<<"] ";
     } else {
         failed++;
-        std::cout<<" ["<<RED<<"FAILED"<<NORMAL<<"] ";
+        std::cout<<" ["<<RED<<"FAIL"<<NORMAL<<"] ";
     }
     std::cout<<case_name<<std::endl;
 }
@@ -53,4 +53,9 @@ void cpptest::Module::report(std::string case_name, bool test_success)
 void cpptest::Module::fn(std::string case_name, std::function<bool()> f)
 {
     return report(case_name, f());
+}
+
+bool cpptest::Module::allok() const
+{
+    return passed > 0 && failed == 0;
 }

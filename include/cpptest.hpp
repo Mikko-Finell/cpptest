@@ -20,10 +20,12 @@ public:
     Module(std::string module_name);
     ~Module();
     void set_report_time(bool flag);
+    void suppress(bool flag);
     void report(std::string case_name, bool test_success);
     void fn(std::string case_name, std::function<bool()> f);
+    bool allok() const;
 };
 
 } // namespace cpptest
 
-#endif 
+#endif // __libcpptest__
