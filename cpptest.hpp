@@ -7,7 +7,7 @@
 #include <functional>
 #include <list>
 
-namespace Test {
+namespace cpptest {
 
 class Module {
     std::list<std::future<bool>> results;
