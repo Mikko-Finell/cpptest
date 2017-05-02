@@ -3,24 +3,26 @@
 
 #include <iostream>
 #include <string>
-#include <future>
 #include <functional>
 #include <list>
 
 namespace cpptest {
 
 class Module {
-    std::list<std::future<bool>> results;
+    std::list<std::function<bool()>> results;
     std::list<std::string> cases;
     const std::string module_name;
-    void report() {
+
+public:
+    Module(const std::string & name = "") : module_name(name) {}
+    ~Module() {
         if (module_name != "")
             std::cout << '\n' << "Report for module \""
                       << module_name << "\":\n";
 
         std::list<std::string> failed;
-        for (auto& result : results) {
-            if (result.get() == false)
+        for (auto& test : results) {
+            if (test() == false)
                 failed.push_back(cases.front());
             cases.pop_front();
         }
@@ -34,13 +36,9 @@ class Module {
 
         std::cout << std::endl;
     }
-public:
-    std::launch policy = std::launch::async;
-    Module(const std::string & name = "") : module_name(name) {}
-    ~Module() { report(); }
-    void fn(const std::string & s, const std::function<bool()> & f) {
+    void fn(const std::string & s, const std::function<bool()> & fn) {
         cases.push_back(s);
-        results.push_back(std::async(policy, f));
+        results.push_back(fn);
     }
 };
 
